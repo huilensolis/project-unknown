@@ -26,7 +26,7 @@ function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen items-center">
       <Nav />
-      <div className="flex flex-col gap-4 w-full h-full max-w-5xl">
+      <div className="flex flex-col gap-4 w-full h-full max-w-6xl">
         {children}
       </div>
       <Footer />
@@ -74,37 +74,115 @@ function Footer() {
 }
 
 function Bento() {
-  function Box() {
+  function Box({ children }: { children: ReactNode }) {
     return (
-      <div className="w-full h-full bg-neutral-900 p-10 rounded-xl">Box</div>
+      <div className="w-full h-full bg-neutral-100 border border-neutral-200 rounded-xl overflow-hidden">
+        {children}
+      </div>
     );
   }
 
   return (
-    <ul className="grid grid-cols-4 grid-rows-3 gap-4">
-      <li className="col-span-1">
-        <Box></Box>
+    <ul className="grid grid-cols-2 grid-rows-[repeat(6,_18rem)] gap-4">
+      <li className="row-span-3 col-span-2">
+        <Box>
+          <article className="w-full h-full">
+            <header className="flex flex-col p-10">
+              <h3 className="text-neutral-900 font-bold text-xl">
+                Here is supposed to be some cool features, but we dont know
+                which yet
+              </h3>
+              <p className="text-base">
+                Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
+                sint cillum sint consectetur cupidatat.
+              </p>
+            </header>
+            <img
+              src="https://www.notion.so/cdn-cgi/image/format=webp,width=1080/front-static/pages/home/build-any-page-communicate-any-idea.png"
+              className="w-full h-full pl-10 object-cover object-left-top"
+            />
+          </article>
+        </Box>
       </li>
-      <li className="col-span-2">
-        <Box></Box>
+      <li className="row-span-2">
+        <Box>
+          <article className="w-full h-full">
+            <header className="flex flex-col p-10">
+              <h3 className="text-neutral-900 font-bold text-xl">
+                Here is supposed to be some cool features, but we dont know
+                which yet
+              </h3>
+              <p className="text-base">
+                Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
+                sint cillum sint consectetur cupidatat.
+              </p>
+            </header>
+            <img
+              src="https://www.notion.so/cdn-cgi/image/format=webp,width=1080/front-static/pages/home/build-any-page-communicate-any-idea.png"
+              className="w-full h-full pl-10 object-cover object-left-top"
+            />
+          </article>
+        </Box>
       </li>
-      <li className="col-span-1">
-        <Box></Box>
+      <li className="row-span-1">
+        <Box>
+          <article className="w-full h-full">
+            <header className="flex flex-col p-10">
+              <h3 className="text-neutral-900 font-bold text-xl">
+                Here is supposed to be some cool features, but we dont know
+                which yet
+              </h3>
+              <p className="text-base">
+                Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
+                sint cillum sint consectetur cupidatat.
+              </p>
+            </header>
+            <img
+              src="https://www.notion.so/cdn-cgi/image/format=webp,width=1080/front-static/pages/home/build-any-page-communicate-any-idea.png"
+              className="w-full h-full pl-10 object-cover object-left-top"
+            />
+          </article>
+        </Box>
       </li>
-      <li className="col-span-2">
-        <Box></Box>
+      <li className="row-span-2">
+        <Box>
+          <article className="w-full h-full">
+            <header className="flex flex-col p-10">
+              <h3 className="text-neutral-900 font-bold text-xl">
+                Here is supposed to be some cool features, but we dont know
+                which yet
+              </h3>
+              <p className="text-base">
+                Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
+                sint cillum sint consectetur cupidatat.
+              </p>
+            </header>
+            <img
+              src="https://www.notion.so/cdn-cgi/image/format=webp,width=1080/front-static/pages/home/build-any-page-communicate-any-idea.png"
+              className="w-full h-full pl-10 object-cover object-left-top"
+            />
+          </article>
+        </Box>
       </li>
-      <li className="col-span-2">
-        <Box></Box>
-      </li>
-      <li className="col-span-1">
-        <Box></Box>
-      </li>
-      <li className="col-span-2">
-        <Box></Box>
-      </li>
-      <li className="col-span-1">
-        <Box></Box>
+      <li className="row-span-1">
+        <Box>
+          <article className="w-full h-full">
+            <header className="flex flex-col p-10">
+              <h3 className="text-neutral-900 font-bold text-xl">
+                Here is supposed to be some cool features, but we dont know
+                which yet
+              </h3>
+              <p className="text-base">
+                Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
+                sint cillum sint consectetur cupidatat.
+              </p>
+            </header>
+            <img
+              src="https://www.notion.so/cdn-cgi/image/format=webp,width=1080/front-static/pages/home/build-any-page-communicate-any-idea.png"
+              className="w-full h-full pl-10 object-cover object-left-top"
+            />
+          </article>
+        </Box>
       </li>
     </ul>
   );
