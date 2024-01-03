@@ -9,7 +9,7 @@ export default function LandingPage() {
           <h1 className="text-5xl font-bold text-neutral-800">
             Project Unknwon
           </h1>
-          <sub className="text-4xl text-center text-balance font-bold text-neutral-800">
+          <sub className="text-4xl text-center text-balance font-semibold text-neutral-800">
             A secret project, wich will be cool, but we dont know why yet. Here
             are going to be named some cool features of this project
           </sub>
@@ -42,25 +42,35 @@ function Nav() {
     { title: "FAQ", href: "/faq" },
     { title: "Docs", href: "/docs" },
   ];
+
+  function NavItem({ title, href }: { title: string; href: string }) {
+    return (
+      <Link
+        href={href}
+        className="w-max py-2 px-4 rounded-sm hover:bg-neutral-100 transition-colors delay-75"
+      >
+        {title}
+      </Link>
+    );
+  }
+
   return (
     <nav className="flex justify-between w-full p-4">
       <div className="w-full flex gap-4 items-center">
-        <h2 className="text-xl font-bold w-max">Project Unknwon</h2>
-        <ul className="flex gap-4 items-center">
+        <h2 className="text-xl font-bold w-max">PU</h2>
+        <ul className="flex gap-2 items-center">
           {NAVLINKS.map((linkItem) => (
             <li key={linkItem.href}>
-              <Link href={linkItem.href}>{linkItem.title}</Link>
+              <NavItem title={linkItem.title} href={linkItem.href} />
             </li>
           ))}
         </ul>
       </div>
       <div className="flex gap-4 items-center">
-        <Link href="/login" className="flex w-max">
-          Log In
-        </Link>
+        <NavItem title="Login" href="/login" />
         <Link
           href="/signup"
-          className="flex w-max bg-neutral-800 text-white py-2 px-4 rounded-lg"
+          className="flex w-max bg-neutral-950 hover:bg-neutral-800 transition-all delay-75 text-neutral-50 py-2 px-4 rounded-lg"
         >
           Get Project Unknwon for free
         </Link>
