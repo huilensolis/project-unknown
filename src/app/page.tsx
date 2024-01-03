@@ -1,3 +1,4 @@
+import { AArrowUp, Brush, FileAxis3d, Frame, Wand2 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -97,7 +98,8 @@ function Bento() {
       <li className="row-span-3 col-span-2">
         <Box>
           <article className="w-full h-full">
-            <header className="flex flex-col p-10">
+            <header className="flex flex-col gap-2 p-10">
+              <Brush className="text-green-500" />
               <h3 className="text-neutral-900 font-bold text-xl">
                 Here is supposed to be some cool features, but we dont know
                 which yet
@@ -117,7 +119,8 @@ function Bento() {
       <li className="row-span-2">
         <Box>
           <article className="w-full h-full">
-            <header className="flex flex-col p-10">
+            <header className="flex flex-col gap-2 p-10">
+              <AArrowUp className="text-red-500" />
               <h3 className="text-neutral-900 font-bold text-xl">
                 Here is supposed to be some cool features, but we dont know
                 which yet
@@ -137,7 +140,8 @@ function Bento() {
       <li className="row-span-1">
         <Box>
           <article className="w-full h-full">
-            <header className="flex flex-col p-10">
+            <header className="flex flex-col gap-2 p-10">
+              <Wand2 className="text-violet-500" />
               <h3 className="text-neutral-900 font-bold text-xl">
                 Here is supposed to be some cool features, but we dont know
                 which yet
@@ -157,7 +161,8 @@ function Bento() {
       <li className="row-span-2">
         <Box>
           <article className="w-full h-full">
-            <header className="flex flex-col p-10">
+            <header className="flex flex-col gap-2 p-10">
+              <Frame className="text-yellow-500" />
               <h3 className="text-neutral-900 font-bold text-xl">
                 Here is supposed to be some cool features, but we dont know
                 which yet
@@ -177,7 +182,8 @@ function Bento() {
       <li className="row-span-1">
         <Box>
           <article className="w-full h-full">
-            <header className="flex flex-col p-10">
+            <header className="flex flex-col gap-2 p-10">
+              <FileAxis3d className="text-blue-500" />
               <h3 className="text-neutral-900 font-bold text-xl">
                 Here is supposed to be some cool features, but we dont know
                 which yet
