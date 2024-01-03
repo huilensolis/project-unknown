@@ -1,6 +1,14 @@
 {
-  "extends": ["next/core-web-vitals", "./node_modules/standard/eslintrc.json"],
+  "extends": [
+    "next/core-web-vitals",
+    "./node_modules/standard/eslintrc.json",
+    "prettier"
+  ],
   "rules": {
-    "space-before-function-paren": "off"
-  }
+    "prettier/prettier": "error",
+    "space-before-function-paren": "off",
+    "space-in-brackets": "off",
+    "comma-dangle": "off"
+  },
+  "plugins": ["prettier"]
 }
