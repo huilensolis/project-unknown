@@ -7,27 +7,16 @@ import {
   Wand2,
 } from 'lucide-react'
 import Link from 'next/link'
-import { ReactNode } from 'react'
+import { SectionTitle } from './components/section-title'
+import { BroweserWindow } from './components/browser-window'
+import { Layout } from './components/layout'
+import { Box } from './components/box'
 
 export default function LandingPage() {
   return (
     <Layout>
       <main className="w-full h-full pt-44 mb-44">
-        <article className="flex flex-col justify-center items-center">
-          <h1 className="text-6xl font-bold text-neutral-800">
-            Project Unknwon
-          </h1>
-          <sub className="text-3xl text-center text-balance font-semibold text-neutral-800">
-            A secret project, wich will be cool, but we dont know why yet. Here
-            are going to be named some cool features of this project.
-          </sub>
-          <Link
-            href="/"
-            className="flex items-center justify-center text-lg font-medium bg-neutral-950 hover:bg-neutral-800 transition-colors delay-75 text-neutral-50 py-2 px-4 rounded-lg mt-8"
-          >
-            Get PU for free <ChevronRight />
-          </Link>
-        </article>
+        <HeroSection />
       </main>
       <section>
         <div className="shadow-2xl shadow-neutral-500/20 rounded-xl">
@@ -49,75 +38,31 @@ export default function LandingPage() {
         <SaveFilesOnCloudSection />
       </section>
       <section>
+        <ShareYourFiles />
+      </section>
+      <section>
         <JoinWitList />
       </section>
     </Layout>
   )
 }
 
-function Layout({ children }: { children: ReactNode }) {
+function HeroSection() {
   return (
-    <div className="flex flex-col min-h-screen items-center bg-neutral-50">
-      <div className="fixed top-0 left-0 w-full">
-        <Nav />
-      </div>
-      <div className="flex flex-col gap-40 w-full h-full max-w-6xl">
-        {children}
-      </div>
-      <Footer />
-    </div>
-  )
-}
-
-function Nav() {
-  const NAVLINKS: { title: string; href: string }[] = [
-    { title: 'Home', href: '/' },
-    { title: 'About', href: '/about' },
-    { title: 'Contact', href: '/contact' },
-    { title: 'FAQ', href: '/faq' },
-    { title: 'Docs', href: '/docs' },
-  ]
-
-  function NavItem({ title, href }: { title: string; href: string }) {
-    return (
+    <article className="flex flex-col justify-center items-center">
+      <h1 className="text-6xl font-bold text-neutral-800">Project Unknwon</h1>
+      <sub className="text-3xl text-center text-balance font-semibold text-neutral-800">
+        A secret project, wich will be cool, but we dont know why yet. Here are
+        going to be named some cool features of this project.
+      </sub>
       <Link
-        href={href}
-        className="w-max py-2 px-4 rounded-sm hover:bg-neutral-100 transition-colors delay-75"
+        href="/"
+        className="flex items-center justify-center text-lg font-medium bg-neutral-950 hover:bg-neutral-800 transition-colors delay-75 text-neutral-50 py-2 px-4 rounded-lg mt-8"
       >
-        {title}
+        Get PU for free <ChevronRight />
       </Link>
-    )
-  }
-
-  return (
-    <nav className="flex items-center justify-center w-full p-4 bg-neutral-50 border-b border-neutral-200">
-      <div className="w-full max-w-6xl flex justify-between">
-        <div className="w-full flex gap-4 items-center">
-          <h2 className="text-xl font-bold w-max">PU</h2>
-          <ul className="flex gap-2 items-center">
-            {NAVLINKS.map((linkItem) => (
-              <li key={linkItem.href}>
-                <NavItem title={linkItem.title} href={linkItem.href} />
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex gap-4 items-center">
-          <NavItem title="Login" href="/login" />
-          <Link
-            href="/signup"
-            className="flex w-max bg-neutral-950 hover:bg-neutral-800 transition-all delay-75 text-neutral-50 py-2 px-4 rounded-lg"
-          >
-            Get PU for free
-          </Link>
-        </div>
-      </div>
-    </nav>
+    </article>
   )
-}
-
-function Footer() {
-  return <footer>footer</footer>
 }
 
 function OpenSource() {
@@ -132,14 +77,6 @@ function OpenSource() {
         Checkout Github Repository <ChevronRight />
       </Link>
     </article>
-  )
-}
-
-function Box({ children }: { children: ReactNode }) {
-  return (
-    <div className="w-full h-full bg-neutral-100 border border-neutral-200 rounded-xl overflow-hidden">
-      {children}
-    </div>
   )
 }
 
@@ -234,19 +171,6 @@ function Bento() {
   )
 }
 
-function BroweserWindow({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex flex-col w-full h-full border border-neutral-200 rounded-xl overflow-hidden">
-      <figure className="w-full h-12 px-4 border-b border-neutral-200 flex gap-2 items-center justify-start">
-        <figure className="w-3 h-3 rounded-full bg-red-500" />
-        <figure className="w-3 h-3 rounded-full bg-yellow-500" />
-        <figure className="w-3 h-3 rounded-full bg-green-500" />
-      </figure>
-      <div>{children}</div>
-    </div>
-  )
-}
-
 function SaveFilesOnCloudSection() {
   return (
     <article className="flex flex-col justify-center items-center">
@@ -259,11 +183,11 @@ function SaveFilesOnCloudSection() {
   )
 }
 
-function SectionTitle({ children }: { children: ReactNode }) {
+function ShareYourFiles() {
   return (
-    <h2 className="text-5xl font-bold text-neutral-950 text-center text-balance">
-      {children}
-    </h2>
+    <article>
+      <SectionTitle>Share your files.</SectionTitle>
+    </article>
   )
 }
 
