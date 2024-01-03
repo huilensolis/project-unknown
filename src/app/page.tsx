@@ -5,9 +5,9 @@ import {
   Frame,
   Mail,
   Wand2,
-} from "lucide-react";
-import Link from "next/link";
-import { ReactNode } from "react";
+} from 'lucide-react'
+import Link from 'next/link'
+import { ReactNode } from 'react'
 
 export default function LandingPage() {
   return (
@@ -52,7 +52,7 @@ export default function LandingPage() {
         <JoinWitList />
       </section>
     </Layout>
-  );
+  )
 }
 
 function Layout({ children }: { children: ReactNode }) {
@@ -66,17 +66,17 @@ function Layout({ children }: { children: ReactNode }) {
       </div>
       <Footer />
     </div>
-  );
+  )
 }
 
 function Nav() {
   const NAVLINKS: { title: string; href: string }[] = [
-    { title: "Home", href: "/" },
-    { title: "About", href: "/about" },
-    { title: "Contact", href: "/contact" },
-    { title: "FAQ", href: "/faq" },
-    { title: "Docs", href: "/docs" },
-  ];
+    { title: 'Home', href: '/' },
+    { title: 'About', href: '/about' },
+    { title: 'Contact', href: '/contact' },
+    { title: 'FAQ', href: '/faq' },
+    { title: 'Docs', href: '/docs' },
+  ]
 
   function NavItem({ title, href }: { title: string; href: string }) {
     return (
@@ -86,7 +86,7 @@ function Nav() {
       >
         {title}
       </Link>
-    );
+    )
   }
 
   return (
@@ -113,26 +113,26 @@ function Nav() {
         </div>
       </div>
     </nav>
-  );
+  )
 }
 
 function Footer() {
-  return <footer>footer</footer>;
+  return <footer>footer</footer>
 }
 
 function OpenSource() {
   return (
     <article className="flex flex-col gap-4 items-center justify-center">
-      <SectionTitle className="font-bold text-5xl">Open source</SectionTitle>
+      <SectionTitle>Open source</SectionTitle>
       <p className="text-balance font-medium text-lg text-center">
         All code is available at github, trusted by the community. <br />
-        We respect your privacy. We dont collect any data.{" "}
+        We respect your privacy. We dont collect any data.{' '}
       </p>
       <Link href="https://github.com" className="flex text-blue-500">
         Checkout Github Repository <ChevronRight />
       </Link>
     </article>
-  );
+  )
 }
 
 function Box({ children }: { children: ReactNode }) {
@@ -140,7 +140,7 @@ function Box({ children }: { children: ReactNode }) {
     <div className="w-full h-full bg-neutral-100 border border-neutral-200 rounded-xl overflow-hidden">
       {children}
     </div>
-  );
+  )
 }
 
 function Bento() {
@@ -231,7 +231,7 @@ function Bento() {
         </Box>
       </li>
     </ul>
-  );
+  )
 }
 
 function BroweserWindow({ children }: { children: ReactNode }) {
@@ -244,7 +244,7 @@ function BroweserWindow({ children }: { children: ReactNode }) {
       </figure>
       <div>{children}</div>
     </div>
-  );
+  )
 }
 
 function SaveFilesOnCloudSection() {
@@ -256,7 +256,7 @@ function SaveFilesOnCloudSection() {
         cillum sint consectetur cupidatat.
       </sub>
     </article>
-  );
+  )
 }
 
 function SectionTitle({ children }: { children: ReactNode }) {
@@ -264,12 +264,12 @@ function SectionTitle({ children }: { children: ReactNode }) {
     <h2 className="text-5xl font-bold text-neutral-950 text-center text-balance">
       {children}
     </h2>
-  );
+  )
 }
 
 function JoinWitList() {
   return (
-    <section className="">
+    <section>
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
         <SectionTitle>Join the wait list, be the first to get UP.</SectionTitle>
         <p className="mb-8 text-xl font-normal text-neutral-950 text-center text-balance">
@@ -278,8 +278,8 @@ function JoinWitList() {
         </p>
         <form className="w-full max-w-md mx-auto">
           <label
-            for="default-email"
-            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+            htmlFor="default-email"
+            className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
           >
             Email sign-up
           </label>
@@ -290,13 +290,13 @@ function JoinWitList() {
             <input
               type="email"
               id="default-email"
-              classname="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter your email here..."
               required
             />
             <button
               type="submit"
-              classname="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Sign up
             </button>
@@ -304,5 +304,5 @@ function JoinWitList() {
         </form>
       </div>
     </section>
-  );
+  )
 }
