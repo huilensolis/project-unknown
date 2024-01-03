@@ -11,6 +11,7 @@ import { SectionTitle } from './components/section-title'
 import { BroweserWindow } from './components/browser-window'
 import { Layout } from './components/layout'
 import { Box } from './components/box'
+import { SectionSubtitle } from './components/section-subtitle'
 
 export default function LandingPage() {
   return (
@@ -40,7 +41,7 @@ export default function LandingPage() {
       <section>
         <ShareYourFiles />
       </section>
-      <section>
+      <section className="pb-52">
         <JoinWitList />
       </section>
     </Layout>
@@ -51,10 +52,10 @@ function HeroSection() {
   return (
     <article className="flex flex-col justify-center items-center">
       <h1 className="text-6xl font-bold text-neutral-800">Project Unknwon</h1>
-      <sub className="text-3xl text-center text-balance font-semibold text-neutral-800">
+      <SectionSubtitle>
         A secret project, wich will be cool, but we dont know why yet. Here are
         going to be named some cool features of this project.
-      </sub>
+      </SectionSubtitle>
       <Link
         href="/"
         className="flex items-center justify-center text-lg font-medium bg-neutral-950 hover:bg-neutral-800 transition-colors delay-75 text-neutral-50 py-2 px-4 rounded-lg mt-8"
@@ -67,13 +68,13 @@ function HeroSection() {
 
 function OpenSource() {
   return (
-    <article className="flex flex-col gap-4 items-center justify-center">
+    <article className="flex flex-col items-center justify-center">
       <SectionTitle>Open source</SectionTitle>
-      <p className="text-balance font-medium text-lg text-center">
+      <SectionSubtitle>
         All code is available at github, trusted by the community. <br />
         We respect your privacy. We dont collect any data.{' '}
-      </p>
-      <Link href="https://github.com" className="flex text-blue-500">
+      </SectionSubtitle>
+      <Link href="https://github.com" className="flex text-blue-500 mt-5">
         Checkout Github Repository <ChevronRight />
       </Link>
     </article>
@@ -175,10 +176,10 @@ function SaveFilesOnCloudSection() {
   return (
     <article className="flex flex-col justify-center items-center">
       <SectionTitle>Save your files on the cloud.</SectionTitle>
-      <sub className="text-neutral-950 text-3xl font-medium text-balance text-center">
+      <SectionSubtitle>
         Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint
         cillum sint consectetur cupidatat.
-      </sub>
+      </SectionSubtitle>
     </article>
   )
 }
@@ -186,7 +187,19 @@ function SaveFilesOnCloudSection() {
 function ShareYourFiles() {
   return (
     <article>
-      <SectionTitle>Share your files.</SectionTitle>
+      <div className="mb-10">
+        <SectionTitle>Share your files.</SectionTitle>
+        <SectionSubtitle>
+          Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint
+          cillum sint consectetur cupidatat.
+        </SectionSubtitle>
+      </div>
+      <BroweserWindow>
+        <img
+          src="https://www.nuclino.com/img/solutions/document-sharing-tool-editor.png"
+          className="w-full h-full object-cover object-center"
+        />
+      </BroweserWindow>
     </article>
   )
 }
@@ -196,11 +209,12 @@ function JoinWitList() {
     <section>
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 z-10 relative">
         <SectionTitle>Join the wait list, be the first to get UP.</SectionTitle>
-        <p className="mb-8 text-xl font-normal text-neutral-950 text-center text-balance">
-          Here at Flowbite we focus on markets where technology, innovation, and
-          capital can unlock long-term value and drive economic growth.
-        </p>
-        <form className="w-full max-w-md mx-auto">
+        <SectionSubtitle>
+          lorem ipsum dolor sit amet, consectetur adipisicing elit lorem ipsum
+          Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint
+          cillum sint consectetur cupidatat.
+        </SectionSubtitle>
+        <form className="w-full max-w-md mx-auto mt-5">
           <label
             htmlFor="default-email"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
