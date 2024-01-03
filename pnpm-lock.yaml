@@ -1949,6 +1949,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
+<<<<<<< HEAD
+=======
   /lucide-react@0.303.0(react@18.2.0):
     resolution: {integrity: sha512-B0B9T3dLEFBYPCUlnUS1mvAhW1craSbF9HO+JfBjAtpFUJ7gMIqmEwNSclikY3RiN2OnCkj/V1ReAQpaHae8Bg==}
     peerDependencies:
@@ -1957,6 +1959,7 @@ packages:
       react: 18.2.0
     dev: false
 
+>>>>>>> 7331dd4fbfa8d066f38fe5a7305c1b08be1f9e3f
   /merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
