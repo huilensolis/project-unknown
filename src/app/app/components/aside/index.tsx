@@ -1,3 +1,3 @@
 export function AppAside() {
-  return <aside className="w-full h-full"></aside>
+  return <aside className="w-full h-full" />
 }
