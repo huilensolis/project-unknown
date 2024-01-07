@@ -11,12 +11,101 @@ import {
   Command,
 } from '@/components/ui/command'
 import { CodeIcon, HeadingIcon, TableIcon } from 'lucide-react'
-import { SVGProps } from 'react'
+import { SVGProps, useEffect, useRef } from 'react'
 
-export function SlashCommandMenu() {
+type Props = {
+  onHideMenu: () => void
+}
+
+export function SlashCommandMenu({ onHideMenu }: Props) {
+  const commandRef = useRef<HTMLDivElement>(null)
+  const commandInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const commandEl = commandRef.current
+    if (!commandEl) return
+    setTimeout(() => {
+      if (commandInputRef.current) {
+        commandInputRef.current.focus()
+      }
+    }, 10)
+
+    const keyDownHandler = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape') {
+        onHideMenu()
+        return
+      }
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault()
+        const commandItems = Array.from(
+          commandEl.querySelectorAll('[data-command-menu-item]'),
+        )
+
+        const activeItem =
+          commandItems.find((item) =>
+            item.classList.contains('command-menu-item-active'),
+          ) ?? commandItems[0]
+
+        const nextItem =
+          commandItems[
+            (commandItems.indexOf(activeItem) + 1) % commandItems.length
+          ] ?? commandItems[0]
+        if (!nextItem || !activeItem) return
+
+        activeItem.classList.remove('command-menu-item-active')
+        nextItem.classList.add('command-menu-item-active')
+
+        // scroll into view
+        nextItem.scrollIntoView({
+          block: 'nearest',
+        })
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault()
+        const commandItems = Array.from(
+          commandEl.querySelectorAll('[data-command-menu-item]'),
+        )
+
+        const activeItem =
+          commandItems.find((item) =>
+            item.classList.contains('command-menu-item-active'),
+          ) ?? commandItems[0]
+
+        const nextItem =
+          commandItems[
+            (commandItems.indexOf(activeItem) - 1) % commandItems.length
+          ] ?? commandItems[commandItems.length - 1]
+
+        if (!nextItem || !activeItem) return
+
+        activeItem.classList.remove('command-menu-item-active')
+        nextItem.classList.add('command-menu-item-active')
+
+        // scroll into view
+        nextItem.scrollIntoView({
+          block: 'nearest',
+        })
+      }
+    }
+
+    commandEl.addEventListener('keydown', keyDownHandler)
+
+    return () => {
+      commandEl?.removeEventListener('keydown', keyDownHandler)
+    }
+  }, [])
+
   return (
-    <Command className="rounded-lg border border-gray-200 shadow-md dark:border-gray-800">
-      <CommandInput placeholder="Type a command or search..." />
+    <Command
+      ref={commandRef}
+      className="rounded-lg border border-gray-200 shadow-md dark:border-gray-800"
+    >
+      <CommandInput
+        ref={commandInputRef}
+        placeholder="Type a command or search..."
+      />
       <CommandList>
         <CommandGroup heading="Text Formatting">
           <CommandItem>
