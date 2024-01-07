@@ -9,10 +9,6 @@ export function EditableBox() {
   const editableBoxRef = useRef<HTMLDivElement>(null)
   const [showCommandMenu, setShowCommandMenu] = useState(false)
 
-  // const handleInput: FormEventHandler<HTMLDivElement> = (event) => {
-  //   const textContent = event.currentTarget.textContent ?? ''
-  // }
-
   return (
     <section className="relative">
       <div
@@ -29,7 +25,8 @@ export function EditableBox() {
             setShowCommandMenu(false)
           }
         }}
-      />{' '}
+      />
+
       {showCommandMenu ? (
         <aside className="absolute">
           <SlashCommandMenu
