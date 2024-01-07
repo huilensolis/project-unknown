@@ -10,5 +10,8 @@
     "space-in-brackets": "off",
     "comma-dangle": "off"
   },
-  "plugins": ["prettier"]
+  "plugins": ["prettier"],
+  "globals": {
+    "React": "writable"
+  }
 }
