@@ -10,6 +10,7 @@ import {
   CommandList,
   Command,
 } from '@/components/ui/command'
+import { MenuCommand, MenuCommandType, isCommandType } from '@/types'
 import {
   BoldIcon,
   CodeIcon,
@@ -20,6 +21,7 @@ import {
   ListIcon,
   QuoteIcon,
   TableIcon,
+  TextIcon,
   UnderlineIcon,
   VideoIcon,
 } from 'lucide-react'
@@ -27,9 +29,10 @@ import { useEffect, useRef } from 'react'
 
 type Props = {
   onHideMenu: () => void
+  onSelectCommand: (command: MenuCommand) => void
 }
 
-export function SlashCommandMenu({ onHideMenu }: Props) {
+export function SlashCommandMenu({ onHideMenu, onSelectCommand }: Props) {
   const commandRef = useRef<HTMLDivElement>(null)
   const commandInputRef = useRef<HTMLInputElement>(null)
 
@@ -45,6 +48,32 @@ export function SlashCommandMenu({ onHideMenu }: Props) {
     const keyDownHandler = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         onHideMenu()
+        return
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault()
+        const commandItems = Array.from(
+          commandEl.querySelectorAll('[data-command-menu-item]'),
+        )
+
+        const activeItem =
+          commandItems.find((item) =>
+            item.classList.contains('command-menu-item-active'),
+          ) ?? commandItems[0]
+
+        if (!activeItem) return
+
+        const commandType = activeItem.getAttribute(
+          'data-command-menu-item-type',
+        )
+
+        if (isCommandType(commandType)) {
+          onSelectCommand({
+            type: commandType,
+          })
+        }
+
         return
       }
 
@@ -107,7 +136,7 @@ export function SlashCommandMenu({ onHideMenu }: Props) {
     return () => {
       commandEl?.removeEventListener('keydown', keyDownHandler)
     }
-  }, [onHideMenu])
+  }, [onHideMenu, onSelectCommand])
 
   return (
     <Command
@@ -120,57 +149,114 @@ export function SlashCommandMenu({ onHideMenu }: Props) {
       />
       <CommandList>
         <CommandGroup heading="Text Formatting">
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.TEXT_FORMATTING,
+            }}
+          >
             <BoldIcon className="mr-2 h-4 w-4" />
             <div>Make your text bold</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.TEXT_FORMATTING,
+            }}
+          >
             <ItalicIcon className="mr-2 h-4 w-4" />
             <div>Italicize your text</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.TEXT_FORMATTING,
+            }}
+          >
             <UnderlineIcon className="mr-2 h-4 w-4" />
             <div>Underline your text</div>
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Block Types">
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.LIST,
+            }}
+          >
             <ListIcon className="mr-2 h-4 w-4" />
             <div>Create a bulleted list</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.LIST,
+            }}
+          >
             <ListIcon className="mr-2 h-4 w-4" />
             <div>Create a numbered list</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.QUOTE,
+            }}
+          >
             <QuoteIcon className="mr-2 h-4 w-4" />
             <div>Insert a blockquote</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.CODE,
+            }}
+          >
             <CodeIcon className="mr-2 h-4 w-4" />
             <div>Insert code</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.TABLE,
+            }}
+          >
             <TableIcon className="mr-2 h-4 w-4" />
             <div>Insert a table</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.HEADING,
+            }}
+          >
             <HeadingIcon className="mr-2 h-4 w-4" />
             <div>Insert a heading</div>
+          </CommandItem>
+          {/* paragraph */}
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.PARAGRAPH,
+            }}
+          >
+            <TextIcon className="mr-2 h-4 w-4" />
+            <div>Insert a paragraph</div>
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Embeds">
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.EMBED,
+            }}
+          >
             <ImageIcon className="mr-2 h-4 w-4" />
             <div>Embed an image from a URL</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.EMBED,
+            }}
+          >
             <VideoIcon className="mr-2 h-4 w-4" />
             <div>Embed a video from a URL</div>
           </CommandItem>
-          <CommandItem>
+          <CommandItem
+            menuCommand={{
+              type: MenuCommandType.LINK,
+            }}
+          >
             <LinkIcon className="mr-2 h-4 w-4" />
             <div>Embed a link from a URL</div>
           </CommandItem>

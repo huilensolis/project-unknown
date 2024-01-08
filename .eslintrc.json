@@ -1,6 +1,7 @@
 {
   "extends": [
     "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
     "./node_modules/standard/eslintrc.json",
     "prettier"
   ],
@@ -8,7 +9,9 @@
     "prettier/prettier": "error",
     "space-before-function-paren": "off",
     "space-in-brackets": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   },
   "plugins": ["prettier"],
   "globals": {

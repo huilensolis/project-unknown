@@ -1,19 +1,40 @@
 'use client'
 
 import { SlashCommandMenu } from '@/components/slash-command-menu'
-import { useRef, useState } from 'react'
+import { MenuCommand, MenuCommandType } from '@/types'
+import { useCallback, useRef, useState } from 'react'
 
-const inputBoxBaseClassName = 'border-2 border-gray-300 p-2'
-
+const INPUT_BOX_BASE_CLASSNAME = 'border-2 border-gray-300 p-2'
 export function EditableBox() {
   const editableBoxRef = useRef<HTMLDivElement>(null)
   const [showCommandMenu, setShowCommandMenu] = useState(false)
+  const [inputBoxClassName, setInputBoxClassName] = useState(
+    INPUT_BOX_BASE_CLASSNAME,
+  )
+  const focusEditableBox = useCallback(() => {
+    if (editableBoxRef.current) {
+      editableBoxRef.current.focus()
+    }
+  }, [])
+
+  const onSelectCommand = (command: MenuCommand) => {
+    const { type } = command
+
+    if (type === MenuCommandType.HEADING) {
+      setInputBoxClassName(INPUT_BOX_BASE_CLASSNAME + ' text-2xl font-bold')
+    } else if (type === MenuCommandType.PARAGRAPH) {
+      setInputBoxClassName(INPUT_BOX_BASE_CLASSNAME + ' text-base font-normal')
+    }
+
+    setShowCommandMenu(false)
+    focusEditableBox()
+  }
 
   return (
     <section className="relative">
       <div
         ref={editableBoxRef}
-        className={inputBoxBaseClassName}
+        className={inputBoxClassName}
         contentEditable
         // onInput={handleInput}
         onKeyDown={(event) => {
@@ -30,11 +51,10 @@ export function EditableBox() {
       {showCommandMenu ? (
         <aside className="absolute">
           <SlashCommandMenu
+            onSelectCommand={onSelectCommand}
             onHideMenu={() => {
               setShowCommandMenu(false)
-              if (editableBoxRef.current) {
-                editableBoxRef.current.focus()
-              }
+              focusEditableBox()
             }}
           />
         </aside>
