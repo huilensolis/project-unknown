@@ -6,6 +6,8 @@ import * as Tabs from '@radix-ui/react-tabs'
 import * as Dialog from '@radix-ui/react-dialog'
 import { Image, Search } from 'lucide-react'
 import { useDebounce } from '@/hooks/use-debounce'
+import { type Image as UnsplashImage } from '@/services/unsplash/models/entities'
+import { ApiRoutes } from '@/app/api/models'
 
 export function Header({ defaultBackground }: IHeaderProps) {
   const [background, setBackground] = useState<string | null>(
@@ -114,7 +116,7 @@ function ImagePickerTabs({
         <FilesImagePicker onNewBackground={onNewBackground} />
       </Tabs.Content>
       <Tabs.Content className="grow outline-none px-2 py-4" value="tab2">
-        <UnsplashImagePicker />
+        <UnsplashImagePicker onNewBackground={onNewBackground} />
       </Tabs.Content>
     </Tabs.Root>
   )
@@ -144,8 +146,16 @@ function FilesImagePicker({
   )
 }
 
-function UnsplashImagePicker() {
+function UnsplashImagePicker({
+  onNewBackground,
+}: {
+  onNewBackground: (imageUrl: string) => void
+}) {
+  const [images, setImages] = useState<UnsplashImage[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [notFound, setNotFound] = useState<boolean>(false)
+
   const { debouncedValue } = useDebounce({
     intitialValue: searchValue,
     delay: 500,
@@ -156,11 +166,24 @@ function UnsplashImagePicker() {
   }
 
   useEffect(() => {
-    console.log(debouncedValue)
-  }, [debouncedValue])
+    async function fetchImages() {
+      try {
+        setIsLoading(true)
+        const res = await fetch(ApiRoutes.dynamic.searchImage(debouncedValue))
+        const responseBody: { images: UnsplashImage[] } = await res.json()
 
+        setIsLoading(false)
+        setImages(responseBody.images)
+      } catch (e) {
+        console.log(e)
+        setIsLoading(false)
+        setNotFound(true)
+      }
+    }
+    fetchImages()
+  }, [debouncedValue])
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       <section>
         <form>
           <label
@@ -184,7 +207,29 @@ function UnsplashImagePicker() {
           </div>
         </form>
       </section>
-      <ul>{/* */}</ul>
+      {isLoading && <>loading</>}
+      {notFound && <>not found</>}
+      <section>
+        <ul className="flex flex-wrap gap-2">
+          {images.length !== 0 &&
+            images.map((image) => (
+              <li
+                key={image.id}
+                className="w-80 h-32 overflow-hidden rounded-md"
+              >
+                <button
+                  className="w-full h-full"
+                  onClick={() => onNewBackground(image.urls.full)}
+                >
+                  <img
+                    src={image.urls.small}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </button>
+              </li>
+            ))}
+        </ul>
+      </section>
     </div>
   )
 }

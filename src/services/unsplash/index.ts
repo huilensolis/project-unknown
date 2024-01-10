@@ -16,10 +16,12 @@ export class UnsPlashService {
     })
   }
 
-  async searchImage(query: string) {
-    const jsonResponse = await this.fetchApi<Image>({
+  static async searchImage(query: string) {
+    const jsonResponse = await new UnsPlashService().fetchApi<{
+      results: Image
+    }>({
       endpoint: UNSPLASH_API_ENDPOINTS.dynamic.searchImages(query),
     })
-    return jsonResponse
+    return jsonResponse.results
   }
 }
