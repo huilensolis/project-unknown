@@ -1,10 +1,11 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { IHeaderProps } from './header.models'
 import * as Tabs from '@radix-ui/react-tabs'
 import * as Dialog from '@radix-ui/react-dialog'
-import { Image } from 'lucide-react'
+import { Image, Search } from 'lucide-react'
+import { useDebounce } from '@/hooks/use-debounce'
 
 export function Header({ defaultBackground }: IHeaderProps) {
   const [background, setBackground] = useState<string | null>(
@@ -70,8 +71,8 @@ function PickImage({
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content className="flex items-center justify-center fixed top-0 left-0 w-screen h-screen bg-neutral-800/30">
-            <div className="bg-neutral-50 flex flex-col gap-4 rounded-lg overflow-hidden">
-              <ImagePicker onNewBackground={handleNewBackground} />
+            <div className="bg-neutral-50 w-full max-w-2xl flex flex-col gap-4 rounded-lg overflow-hidden">
+              <ImagePickerTabs onNewBackground={handleNewBackground} />
               <div className="w-full flex justify-end p-2">
                 <Dialog.Close className="bg-neutral-700 text-neutral-50 px-3 py-2 rounded-lg">
                   Close
@@ -85,7 +86,41 @@ function PickImage({
   )
 }
 
-function ImagePicker({
+function ImagePickerTabs({
+  onNewBackground,
+}: {
+  onNewBackground: (imageUrl: string) => void
+}) {
+  return (
+    <Tabs.Root className="flex flex-col w-full" defaultValue="tab1">
+      <Tabs.List
+        className="shrink-0 w-full flex"
+        aria-label="Manage your account"
+      >
+        <Tabs.Trigger
+          className="border-b border-b-neutral-300 bg-neutral-50 px-5 w-full h-[45px] flex items-center justify-center text-[15px] text-neutral-800 select-none data-[state=active]:border-neutral-700 cursor-default"
+          value="tab1"
+        >
+          Pick from files
+        </Tabs.Trigger>
+        <Tabs.Trigger
+          className="border-b border-b-neutral-300 bg-neutral-50 px-5 w-full h-[45px] flex items-center justify-center text-[15px] text-neutral-800 select-none data-[state=active]:border-neutral-700 cursor-default"
+          value="tab2"
+        >
+          Pick from Unsplash
+        </Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content className="grow outline-none px-2 py-4" value="tab1">
+        <FilesImagePicker onNewBackground={onNewBackground} />
+      </Tabs.Content>
+      <Tabs.Content className="grow outline-none px-2 py-4" value="tab2">
+        <UnsplashImagePicker />
+      </Tabs.Content>
+    </Tabs.Root>
+  )
+}
+
+function FilesImagePicker({
   onNewBackground,
 }: {
   onNewBackground: (imageUrl: string) => void
@@ -101,33 +136,55 @@ function ImagePicker({
       onNewBackground(render.result as string)
     }
   }
+
   return (
-    <Tabs.Root className="flex flex-col w-full" defaultValue="tab1">
-      <Tabs.List
-        className="shrink-0 flex border-b border-mauve6"
-        aria-label="Manage your account"
-      >
-        <Tabs.Trigger
-          className="bg-white px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none text-mauve11 select-none first:rounded-tl-md last:rounded-tr-md hover:text-violet11 data-[state=active]:text-violet11 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black outline-none cursor-default"
-          value="tab1"
-        >
-          Pick from files
-        </Tabs.Trigger>
-        <Tabs.Trigger
-          className="bg-white px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none text-mauve11 select-none first:rounded-tl-md last:rounded-tr-md hover:text-violet11 data-[state=active]:text-violet11 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black outline-none cursor-default"
-          value="tab2"
-        >
-          Pick from Unsplash
-        </Tabs.Trigger>
-      </Tabs.List>
-      <Tabs.Content className="grow outline-none p-2" value="tab1">
-        <div>
-          <input type="file" onChange={changeBackground} />
-        </div>
-      </Tabs.Content>
-      <Tabs.Content className="grow outline-none p-2" value="tab2">
-        {/* */}
-      </Tabs.Content>
-    </Tabs.Root>
+    <div>
+      <input type="file" onChange={changeBackground} />
+    </div>
+  )
+}
+
+function UnsplashImagePicker() {
+  const [searchValue, setSearchValue] = useState<string>('')
+  const { debouncedValue } = useDebounce({
+    intitialValue: searchValue,
+    delay: 500,
+  })
+
+  function updateSearchValue(e: ChangeEvent<HTMLInputElement>) {
+    setSearchValue(e.target.value)
+  }
+
+  useEffect(() => {
+    console.log(debouncedValue)
+  }, [debouncedValue])
+
+  return (
+    <div className="flex flex-col">
+      <section>
+        <form>
+          <label
+            htmlFor="search"
+            className="mb-2 text-sm font-medium text-gray-900 sr-only"
+          >
+            Search
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <Search />
+            </div>
+            <input
+              type="search"
+              id="search"
+              className="block w-full p-3 ps-10 text-neutral-800 border border-gray-300 rounded-lg bg-neutral-200 focus:outline-none text-lg"
+              placeholder="Search"
+              required
+              onChange={updateSearchValue}
+            />
+          </div>
+        </form>
+      </section>
+      <ul>{/* */}</ul>
+    </div>
   )
 }
