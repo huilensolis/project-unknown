@@ -7,7 +7,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { FileUp, Image, Search } from 'lucide-react'
 import { useDebounce } from '@/hooks/use-debounce'
 import { type Image as UnsplashImage } from '@/services/unsplash/models/entities'
-import { ApiRoutes } from '@/app/api/models'
+import { ApiService } from '@/services/api'
 
 export function Header({ defaultBackground }: IHeaderProps) {
   const [background, setBackground] = useState<string | null>(
@@ -173,14 +173,20 @@ function UnsplashImagePicker({
     async function fetchImages() {
       try {
         setIsLoading(true)
-        const res = await fetch(ApiRoutes.dynamic.searchImage(debouncedValue))
+        const { images, error } = await ApiService.searchImage({
+          query: debouncedValue,
+        })
 
-        if (!res.ok) return setNotFound(true)
+        if (!images || images.length === 0 || error) {
+          setIsLoading(false)
+          setImages([])
+          setNotFound(true)
 
-        const responseBody: { images: UnsplashImage[] } = await res.json()
+          return
+        }
 
         setIsLoading(false)
-        setImages(responseBody.images)
+        setImages(images)
         setNotFound(false)
       } catch (e) {
         console.log(e)
