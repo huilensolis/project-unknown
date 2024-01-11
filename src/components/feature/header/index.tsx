@@ -4,7 +4,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { IHeaderProps } from './header.models'
 import * as Tabs from '@radix-ui/react-tabs'
 import * as Dialog from '@radix-ui/react-dialog'
-import { Image, Search } from 'lucide-react'
+import { FileUp, Image, Search } from 'lucide-react'
 import { useDebounce } from '@/hooks/use-debounce'
 import { type Image as UnsplashImage } from '@/services/unsplash/models/entities'
 import { ApiRoutes } from '@/app/api/models'
@@ -13,36 +13,20 @@ export function Header({ defaultBackground }: IHeaderProps) {
   const [background, setBackground] = useState<string | null>(
     () => defaultBackground ?? null,
   )
-
-  // this only is for the button on the hover of an actual banner
-  const [showButton, setShowButton] = useState<boolean>(false)
-
-  function toggleButton() {
-    setShowButton(!showButton)
-  }
-
   return (
-    <header className="w-full h-72 bg-neutral-200">
+    <header className="w-full h-72 bg-neutral-200 group" key={background}>
       {background && (
-        <div
-          className="w-full h-full flex relative"
-          onMouseEnter={toggleButton}
-          onMouseLeave={toggleButton}
-        >
+        <div className="w-full h-full flex relative">
           <img
             src={background}
-            className={`w-full h-full object-cover object-center ${
-              showButton ? 'brightness-75' : ''
-            } transition-all delay-75`}
+            className="w-full h-full object-cover object-center grouphover:brightness-75 transition-all delay-75"
           />
-          {showButton && (
-            <div className="absolute inset-0">
-              <PickImage
-                iconClasses="text-neutral-400"
-                onNewBackground={(imageUrl) => setBackground(imageUrl)}
-              />
-            </div>
-          )}
+          <div className="absolute inset-0 hidden group-hover:flex">
+            <PickImage
+              iconClasses="text-neutral-200"
+              onNewBackground={(imageUrl) => setBackground(imageUrl)}
+            />
+          </div>
         </div>
       )}
       {!background && (
@@ -140,8 +124,28 @@ function FilesImagePicker({
   }
 
   return (
-    <div>
-      <input type="file" onChange={changeBackground} />
+    <div className="flex items-center justify-center w-full">
+      <label
+        htmlFor="dropzone-file"
+        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+      >
+        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+          <FileUp className="text-gray-500" />
+          <p className="mb-2 text-sm text-gray-500">
+            <span className="font-semibold">Click to upload</span> or drag and
+            drop
+          </p>
+          <p className="text-xs text-gray-500">
+            SVG, PNG, JPG or GIF (MAX. 800x400px)
+          </p>
+        </div>
+        <input
+          id="dropzone-file"
+          type="file"
+          className="hidden"
+          onChange={changeBackground}
+        />
+      </label>
     </div>
   )
 }
@@ -170,17 +174,23 @@ function UnsplashImagePicker({
       try {
         setIsLoading(true)
         const res = await fetch(ApiRoutes.dynamic.searchImage(debouncedValue))
+
+        if (!res.ok) return setNotFound(true)
+
         const responseBody: { images: UnsplashImage[] } = await res.json()
 
         setIsLoading(false)
         setImages(responseBody.images)
+        setNotFound(false)
       } catch (e) {
         console.log(e)
         setIsLoading(false)
         setNotFound(true)
       }
     }
-    fetchImages()
+    if (searchValue.length > 0) {
+      fetchImages()
+    }
   }, [debouncedValue])
   return (
     <div className="flex flex-col gap-2">
@@ -207,25 +217,30 @@ function UnsplashImagePicker({
           </div>
         </form>
       </section>
-      {isLoading && <>loading</>}
-      {notFound && <>not found</>}
+      {isLoading && searchValue.length > 0 && <>loading</>}
+      {notFound && !isLoading && searchValue.length > 0 && <>not found</>}
       <section>
         <ul className="flex flex-wrap gap-2">
           {images.length !== 0 &&
             images.map((image) => (
-              <li
-                key={image.id}
-                className="w-80 h-32 overflow-hidden rounded-md"
-              >
+              <li key={image.id} className="flex flex-col">
                 <button
                   className="w-full h-full"
                   onClick={() => onNewBackground(image.urls.full)}
                 >
                   <img
                     src={image.urls.small}
-                    className="w-full h-full object-cover object-center"
+                    className="w-52 h-32 rounded-md object-cover object-center"
                   />
                 </button>
+                <a
+                  href={`https://unsplash.com/@${image.user.username}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-neutral-800 w-full text-right underline"
+                >
+                  by {image.user.name}
+                </a>
               </li>
             ))}
         </ul>
