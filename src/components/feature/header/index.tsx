@@ -243,7 +243,7 @@ function UnsplashImagePicker({
                   href={`https://unsplash.com/@${image.user.username}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-neutral-800 w-full text-right underline"
+                  className="text-neutral-800 text-sm w-full text-right underline"
                 >
                   by {image.user.name}
                 </a>
