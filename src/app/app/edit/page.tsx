@@ -1,5 +1,5 @@
-import { EditableBox } from '@/app/components/editor/EditableBox'
 import { Header } from '@/components/feature/header'
+import { EditableDoc } from '@/app/components/editor/EditableBox'
 
 export default function EditPage() {
   return (
@@ -9,7 +9,7 @@ export default function EditPage() {
         <h1 className="text-4xl font-semibold p-2">title</h1>
         <p className="min-h-24 text-lg p-2">start here</p>
 
-        <EditableBox />
+        <EditableDoc />
       </article>
     </div>
   )

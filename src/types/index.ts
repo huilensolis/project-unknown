@@ -22,3 +22,9 @@ export function isCommandType(
     commandType as unknown as MenuCommandType,
   )
 }
+
+export type Box = {
+  content: string
+  id: string
+  type: MenuCommandType
+}
