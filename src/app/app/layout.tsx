@@ -7,7 +7,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <div className="flex w-full h-full sticky top-0 left-0">
         <AppAside />
       </div>
-      <main className="w-full">{children}</main>
+      <main className="w-full p-4">{children}</main>
     </div>
   )
 }
