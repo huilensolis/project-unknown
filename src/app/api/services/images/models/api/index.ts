@@ -1,6 +1,6 @@
 const API_BASE_PATH = 'https://api.unsplash.com'
 
-export const UNSPLASH_API_ENDPOINTS = {
+export const IMAGE_SERVICE_API_ENDPOINTS = {
   static: {
     //
   },

@@ -1,7 +1,7 @@
-import { UNSPLASH_API_ENDPOINTS } from './models/api'
+import { IMAGE_SERVICE_API_ENDPOINTS } from './models/api'
 import { Image } from './models/entities'
 
-export class UnsPlashService {
+export class ImagesService {
   private fetchApi<T>({ endpoint }: { endpoint: string }): Promise<T> {
     return new Promise((resolve, reject) => {
       fetch(endpoint, {
@@ -16,11 +16,11 @@ export class UnsPlashService {
     })
   }
 
-  static async searchImage(query: string) {
-    const jsonResponse = await new UnsPlashService().fetchApi<{
-      results: Image
+  static async search(query: string) {
+    const jsonResponse = await new ImagesService().fetchApi<{
+      results: Image[]
     }>({
-      endpoint: UNSPLASH_API_ENDPOINTS.dynamic.searchImages(query),
+      endpoint: IMAGE_SERVICE_API_ENDPOINTS.dynamic.searchImages(query),
     })
     return jsonResponse.results
   }

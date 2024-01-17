@@ -1,4 +1,4 @@
-import { searchImage } from './unsplash/search-image'
+import { searchImage } from './images/search'
 
 export const ApiService = {
   searchImage,

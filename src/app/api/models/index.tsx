@@ -1,5 +1,5 @@
 export const ApiRoutes = {
   dynamic: {
-    searchImage: (query: string) => `/api/unsplash/search-image?query=${query}`,
+    searchImage: (query: string) => `/api/images/search?query=${query}`,
   },
 }

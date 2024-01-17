@@ -6,7 +6,7 @@ import * as Tabs from '@radix-ui/react-tabs'
 import * as Dialog from '@radix-ui/react-dialog'
 import { FileUp, Image, Search } from 'lucide-react'
 import { useDebounce } from '@/hooks/use-debounce'
-import { type Image as UnsplashImage } from '@/services/unsplash/models/entities'
+import { type Image as ApiImage } from '@/app/api/services/images/models/entities'
 import { ApiService } from '@/services/api'
 
 export function Header({ defaultBackground }: IHeaderProps) {
@@ -155,7 +155,7 @@ function UnsplashImagePicker({
 }: {
   onNewBackground: (imageUrl: string) => void
 }) {
-  const [images, setImages] = useState<UnsplashImage[]>([])
+  const [images, setImages] = useState<ApiImage[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [notFound, setNotFound] = useState<boolean>(false)
